@@ -1,0 +1,1185 @@
+/* --- FOND ANIMÉ --- */
+body {
+  background: linear-gradient(120deg, #1a1d22 0%, #23272f 100%);
+  min-height: 100vh;
+  animation: gradientMove 12s ease-in-out infinite alternate;
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.app-container {
+  position: relative;
+  overflow-x: hidden;
+  transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+  opacity: 1;
+}
+.app-container::before {
+  content: '';
+  position: fixed;
+  top: -20vh; left: -20vw; width: 140vw; height: 140vh;
+  background: radial-gradient(circle at 70% 30%, #4fd1c511 0%, transparent 70%),
+              radial-gradient(circle at 20% 80%, #ffd70011 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- LOGO GLOW ANIMÉ --- */
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #e2c97b;
+  text-shadow: 0 2px 8px #e2c97b22;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  animation: logoGlow 2.5s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  0% { text-shadow: 0 2px 8px #e2c97b22; }
+  100% { text-shadow: 0 2px 16px #e2c97b99, 0 0 32px #ffd700cc; }
+}
+.logo::before {
+  filter: drop-shadow(0 0 4px #e2c97b44);
+  animation: logoGlow 2.5s ease-in-out infinite alternate;
+}
+
+/* --- NAVBAR GLASS & ACTIVE --- */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(35, 40, 58, 0.92);
+  border-bottom: 2px solid #e2c97b22;
+  box-shadow: 0 4px 24px #0002;
+  transition: background 0.4s;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+.nav-links a, .nav-links button {
+  position: relative;
+  z-index: 1;
+}
+.nav-links .active, .nav-links button.active {
+  color: #e2c97b;
+  border-bottom: 2px solid #e2c97b;
+  background: none;
+  box-shadow: none;
+}
+
+/* --- CARDS & GLASSMORPHISM --- */
+.card, .dashboard-card, .account-card, .transaction-card, .hedge-card {
+  background: rgba(24, 28, 37, 0.93);
+  border-radius: 18px;
+  box-shadow: 0 4px 18px #0003;
+  border: 1.5px solid #23283a;
+  backdrop-filter: blur(6px) saturate(1.1);
+  transition: transform 0.18s, box-shadow 0.18s, border 0.18s;
+}
+.card:hover, .dashboard-card:hover, .account-card:hover, .transaction-card:hover, .hedge-card:hover {
+  border: 1.5px solid #e2c97b;
+  box-shadow: 0 6px 24px #e2c97b22;
+}
+
+/* --- BOUTONS MODERNES --- */
+button, .btn {
+  background: #23283a;
+  color: #e2c97b;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: none;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+button:hover, .btn:hover {
+  background: #353a4d;
+  color: #fff;
+  box-shadow: none;
+}
+
+/* --- TICKER DÉFILANT --- */
+.ticker {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #23283a 60%, #4fd1c5 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #4fd1c522;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: tickerMove 18s linear infinite;
+  padding-left: 100%;
+}
+@keyframes tickerMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* --- BADGES & ALERTES --- */
+.badge, .alert-badge {
+  display: inline-block;
+  background: #23283a;
+  color: #e2c97b;
+  box-shadow: none;
+  animation: none;
+}
+
+/* --- TRANSITIONS DE PAGE --- */
+.app-container.fade-out {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1200px) {
+  .dashboard-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .dashboard-main-left, .dashboard-main-right {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+  }
+  .nav-links {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .app-container, .main-content {
+    padding: 0.5rem;
+  }
+  .dashboard-cards, .dashboard-main-left, .dashboard-main-right {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .dashboard-card, .account-card, .transaction-card, .hedge-card {
+    padding: 0.7rem 0.5rem;
+    font-size: 0.98rem;
+  }
+  .logo {
+    font-size: 1.3rem;
+    gap: 0.3rem;
+  }
+  .footer {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.2rem;
+  }
+  .login-form, .register-form {
+    padding: 1rem 0.5rem;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .transactions-table, .volatility-table, .performances-table {
+    font-size: 0.95rem;
+  }
+  .cac40-graph-labels span {
+    font-size: 0.8rem;
+  }
+}
+
+/* Thème sombre général */
+body {
+  background: linear-gradient(120deg, #1a1d22 0%, #23272f 100%);
+  min-height: 100vh;
+}
+.app-container {
+  position: relative;
+  overflow-x: hidden;
+}
+.app-container::before {
+  content: '';
+  position: fixed;
+  top: -20vh; left: -20vw; width: 140vw; height: 140vh;
+  background: radial-gradient(circle at 70% 30%, #4fd1c511 0%, transparent 70%),
+              radial-gradient(circle at 20% 80%, #ffd70011 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(35, 40, 58, 0.92);
+  border-bottom: 2px solid #e2c97b22;
+  color: #fff;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 24px #0002;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #e2c97b;
+  text-shadow: 0 2px 8px #e2c97b22;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  animation: logoGlow 2.5s ease-in-out infinite alternate;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+@keyframes logoGlow {
+  0% { text-shadow: 0 2px 8px #e2c97b22; }
+  100% { text-shadow: 0 2px 16px #e2c97b99, 0 0 32px #ffd700cc; }
+}
+.logo::before {
+  content: '\1F4B0'; /* 💰 */
+  font-size: 1.5rem;
+  margin-right: 0.3rem;
+  filter: drop-shadow(0 0 4px #e2c97b44);
+  animation: logoGlow 2.5s ease-in-out infinite alternate;
+}
+
+/* --- NAVBAR GLASS & ACTIVE --- */
+.navbar {
+  background: rgba(35, 40, 58, 0.92);
+  border-bottom: 2px solid #e2c97b22;
+  box-shadow: 0 4px 24px #0002;
+  transition: background 0.4s;
+}
+.nav-links a, .nav-links button {
+  position: relative;
+  z-index: 1;
+}
+.nav-links .active, .nav-links button.active {
+  color: #e2c97b;
+  border-bottom: 2px solid #e2c97b;
+  background: none;
+  box-shadow: none;
+}
+
+/* User Info */
+.user-info-left {
+  display: flex;
+  align-items: center;
+  margin-left: 1.2rem;
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.08rem;
+  color: #38b2ac;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  min-width: 120px;
+}
+.user-name {
+  background: #23262b;
+  border-radius: 0.6rem;
+  padding: 0.35rem 1.1rem;
+  margin-left: 0.2rem;
+  color: #38b2ac;
+  font-weight: 700;
+  font-size: 1.08rem;
+  box-shadow: 0 1px 6px #38b2ac22;
+}
+
+/* Main */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+.main-content h1 {
+  font-size: 2.8rem;
+  color: #f7f9fb;
+  margin-bottom: 1rem;
+}
+.main-content p {
+  font-size: 1.3rem;
+  color: #b0b6c3;
+  margin-bottom: 2rem;
+}
+.cta-button {
+  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
+  color: #23272f;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: 40px;
+  box-shadow: 0 4px 24px #ffd70022, 0 2px 8px #4fd1c522;
+  border: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.cta-button:hover {
+  background: linear-gradient(90deg, #4fd1c5 0%, #ffd700 100%);
+  color: #181c25;
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid #23283a;
+  background: #181b20;
+  color: #b5b5b5;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  box-shadow: 0 -2px 12px #4fd1c522;
+}
+
+/* Dashboard grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+.dashboard-main-left, .dashboard-main-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+@media (max-width: 1000px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Cartes et blocs principaux */
+.dashboard-cards, .dashboard-summary, .dashboard-cac40-graph, .dashboard-performances, .dashboard-account-summary, .dashboard-portfolio-cards, .dashboard-volatility, .dashboard-volatility-recap {
+  background: #23283a;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(26,34,54,0.10);
+  padding: 1.5rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+  background: #23283a;
+}
+.dashboard-card {
+  border: 2px solid #4fd1c533;
+  box-shadow: 0 2px 16px #4fd1c522, 0 1px 4px #ffd70022;
+  position: relative;
+  overflow: hidden;
+  padding: 1.2rem 1rem;
+  text-align: left;
+}
+.dashboard-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
+  opacity: 0.7;
+}
+.dashboard-card h3 {
+  letter-spacing: 1px;
+  font-size: 1.18rem;
+  color: #ffd700;
+  text-shadow: 0 1px 6px #ffd70022;
+}
+.dashboard-card p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #e2e6f3;
+}
+.up {
+  color: #7fc8b2 !important;
+}
+.down {
+  color: #e07a7a !important;
+}
+
+.dashboard-summary, .dashboard-cac40-graph, .dashboard-performances, .dashboard-account-summary, .dashboard-portfolio-cards, .dashboard-volatility, .dashboard-volatility-recap {
+  background: #23283a;
+  color: #e2e6f3;
+}
+.dashboard-summary h4, .dashboard-cac40-graph h4, .dashboard-performances h4, .dashboard-account-summary h4, .dashboard-volatility h4, .dashboard-volatility-recap h4 {
+  color: #4fd1c5;
+}
+
+/* Tableaux */
+.volatility-table, .performances-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.volatility-table th, .volatility-table td, .performances-table th, .performances-table td {
+  padding: 0.6rem 0.4rem;
+  text-align: left;
+}
+.volatility-table th, .performances-table th {
+  background: #262b3a;
+  color: #4fd1c5;
+  font-weight: 600;
+  border-bottom: 2px solid #38b2ac33;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+}
+.portfolio-value {
+  color: #4fd1c5;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.portfolio-total {
+  color: #e2e6f3;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Graphique CAC 40 */
+.cac40-graph {
+  width: 100%;
+  height: 80px;
+  margin-bottom: 0.5rem;
+}
+.cac40-graph-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #b0b6c3;
+  margin: 0 0.5rem;
+}
+
+/* Performances */
+.performances-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.see-all-link {
+  color: #b5b5b5;
+  text-decoration: none;
+  font-size: 0.98rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.see-all-link:hover {
+  color: #e2c97b;
+  text-decoration: underline;
+}
+
+/* Résumé du compte */
+.dashboard-account-summary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.dashboard-account-summary li {
+  font-size: 1rem;
+  color: #b0b6c3;
+  margin-bottom: 0.5rem;
+}
+.dashboard-account-summary strong {
+  color: #e2e6f3;
+}
+
+/* Récap volatilité */
+.dashboard-volatility-recap ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.dashboard-volatility-recap li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  color: #b0b6c3;
+}
+.dashboard-volatility-recap .up {
+  color: #4fd1c5;
+  font-weight: bold;
+}
+.dashboard-volatility-recap .down {
+  color: #e53e3e;
+  font-weight: bold;
+}
+
+/* Marchés */
+.page-section {
+  background: #23283a;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(26,34,54,0.10);
+  padding: 2rem 1.5rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  color: #e2e6f3;
+}
+.page-section h2 {
+  color: #4fd1c5;
+  margin-bottom: 1.5rem;
+}
+
+.markets-table-wrapper {
+  overflow-x: auto;
+}
+.markets-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.markets-table th, .markets-table td {
+  padding: 0.7rem 0.5rem;
+  text-align: left;
+}
+.markets-table th {
+  background: #262b3a;
+  color: #4fd1c5;
+  font-weight: 600;
+  border-bottom: 2px solid #38b2ac33;
+}
+.markets-table tr:nth-child(even) {
+  background: #23283a;
+}
+.markets-table tr:nth-child(odd) {
+  background: #262b3a;
+}
+.markets-table td.up {
+  color: #4fd1c5;
+  font-weight: bold;
+}
+.markets-table td.down {
+  color: #e53e3e;
+  font-weight: bold;
+}
+.markets-table tr.selected {
+  background: #2d3347 !important;
+  outline: 2px solid #4fd1c5;
+}
+.markets-table tr:hover {
+  background: #23283a;
+}
+
+/* Analyses */
+.analyses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.analysis-item {
+  background: #262b3a;
+  border-radius: 10px;
+  padding: 1.2rem 1rem;
+  box-shadow: 0 1px 4px rgba(79,209,197,0.07);
+}
+.analysis-item h3 {
+  color: #4fd1c5;
+  margin-top: 0;
+}
+.analysis-item p {
+  color: #e2e6f3;
+  margin-bottom: 0;
+}
+
+/* Modal graphique marchés */
+.markets-chart-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(24,28,37,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.markets-chart-content {
+  background: #23283a;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(26,34,54,0.18);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  text-align: center;
+  color: #e2e6f3;
+  min-width: 340px;
+  max-width: 95vw;
+}
+.markets-chart-content h3 {
+  color: #4fd1c5;
+  margin-bottom: 1.2rem;
+}
+.close-modal {
+  margin-top: 1.5rem;
+  background: #4fd1c5;
+  color: #181c25;
+  border: none;
+  border-radius: 22px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.close-modal:hover {
+  background: #38b2ac;
+}
+
+/* Transactions design */
+.transactions-section {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.transactions-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #4fd1c5;
+}
+.transaction-form.card {
+  background: #23272f;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #0002;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+.transaction-form label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #b5b5b5;
+  gap: 0.3rem;
+}
+.transaction-form select,
+.transaction-form input[type="number"] {
+  background: #181b20;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+}
+.add-transaction-btn {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+  background: linear-gradient(90deg, #38b2ac, #4fd1c5);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0002;
+  transition: background 0.2s;
+}
+.add-transaction-btn:hover {
+  background: linear-gradient(90deg, #4fd1c5, #38b2ac);
+}
+.transactions-list.card {
+  background: #23272f;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #0002;
+  padding: 1.5rem 1rem;
+  margin-bottom: 2rem;
+}
+.transactions-list-title {
+  color: #4fd1c5;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.transactions-table th, .transactions-table td {
+  padding: 0.6rem 0.5rem;
+  text-align: center;
+}
+.transactions-table thead th {
+  background: #181b20;
+  color: #4fd1c5;
+  font-weight: 600;
+}
+.transactions-table tbody tr {
+  border-bottom: 1px solid #333;
+}
+.transactions-table tbody tr:last-child {
+  border-bottom: none;
+}
+.asset-badge {
+  background: #4fd1c5;
+  color: #181b20;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  box-shadow: 0 0 8px #ffd70055, 0 1px 4px #4fd1c522;
+}
+.action-badge {
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: #fff;
+  display: inline-block;
+  box-shadow: 0 0 8px #38b2ac55, 0 1px 4px #ffd70022;
+}
+.action-buy { background: #38b2ac; }
+.action-sell { background: #e53e3e; }
+.action-short { background: #805ad5; }
+.action-limit { background: #ecc94b; color: #181b20; }
+.action-stop { background: #f56565; }
+.empty-tx {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+@media (max-width: 700px) {
+  .transactions-section, .transactions-list.card, .transaction-form.card {
+    padding: 0.5rem !important;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+}
+
+/* Accounts (Mon Compte) */
+.accounts-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.accounts-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #4fd1c5;
+}
+.accounts-details.card, .accounts-funds.card, .accounts-movements.card, .accounts-movements-summary.card, .accounts-pending.card, .accounts-closed.card {
+  background: #23272f;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #0002;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.account-info-list, .funds-list, .movements-summary-list, .pending-list, .closed-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.account-info-list li, .funds-list li, .movements-summary-list li {
+  margin-bottom: 0.5rem;
+  font-size: 1.08rem;
+}
+.funds-badge {
+  background: #4fd1c5;
+  color: #181b20;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.funds-badge.pending {
+  background: #ecc94b;
+  color: #181b20;
+}
+.funds-badge.waiting {
+  background: #805ad5;
+  color: #fff;
+}
+.accounts-ops-movements {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.accounts-movements.card {
+  flex: 2;
+  min-width: 320px;
+}
+.accounts-movements-summary.card {
+  flex: 1;
+  min-width: 220px;
+  align-self: flex-start;
+}
+.movements-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.movements-table th, .movements-table td {
+  padding: 0.6rem 0.5rem;
+  text-align: center;
+}
+.movements-table thead th {
+  background: #181b20;
+  color: #4fd1c5;
+  font-weight: 600;
+}
+.movements-table tbody tr {
+  border-bottom: 1px solid #333;
+}
+.movements-table tbody tr:last-child {
+  border-bottom: none;
+}
+.credit {
+  color: #38b2ac;
+  font-weight: 600;
+}
+.debit {
+  color: #e53e3e;
+  font-weight: 600;
+}
+.pending-list li, .closed-list li {
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+@media (max-width: 900px) {
+  .accounts-ops-movements {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+}
+
+/* AuthGate, Login, Register styles */
+.authgate-outer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #181b20 60%, #23262b 100%);
+}
+.authgate-center.card {
+  background: #181b20;
+  color: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 24px #000a;
+  max-width: 410px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+  border: 1.5px solid #23262b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.authgate-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2.2rem;
+}
+.logo-large {
+  font-size: 2.3rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #38b2ac;
+  text-shadow: 0 2px 12px #38b2ac33;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+.login-container.card {
+  background: #181b20;
+  color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px #000a;
+  max-width: 370px;
+  margin: 3rem auto;
+  padding: 2.5rem 2rem 2rem 2rem;
+  border: 1px solid #23262b;
+}
+.login-form label {
+  display: block;
+  margin-bottom: 1.2rem;
+  font-weight: 500;
+}
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  background: #23262b;
+  color: #fff;
+  font-size: 1.05rem;
+  margin-top: 0.4rem;
+  transition: border 0.2s;
+}
+.login-form input:focus {
+  border: 1.5px solid #38b2ac;
+  outline: none;
+}
+.cta-button {
+  background: linear-gradient(90deg, #38b2ac 0%, #4fd1c5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0004;
+  transition: background 0.2s;
+}
+.cta-button:hover {
+  background: linear-gradient(90deg, #319795 0%, #38b2ac 100%);
+}
+.login-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #aaa;
+}
+.link-button {
+  background: none;
+  border: none;
+  color: #38b2ac;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 0.3rem;
+  font-size: 1rem;
+  text-decoration: underline;
+  padding: 0;
+}
+.link-button:hover {
+  color: #4fd1c5;
+}
+.form-error {
+  color: #e53e3e;
+  background: #2d2323;
+  border-radius: 0.4rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.98rem;
+}
+.register-success {
+  color: #38b2ac;
+  background: #1a2320;
+  border-radius: 0.5rem;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  font-size: 1.08rem;
+}
+
+/* Modal overlay for add account */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: #23272f;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 320px;
+  max-width: 95vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  position: relative;
+  color: #fff;
+  animation: modalIn 0.2s cubic-bezier(.4,1.6,.6,1) both;
+}
+@keyframes modalIn {
+  from { transform: scale(0.95) translateY(30px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.add-account-form label {
+  display: block;
+  margin-bottom: 1.2rem;
+}
+.add-account-form input,
+.add-account-form select {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  background: #181b20;
+  color: #fff;
+  font-size: 1.05rem;
+  margin-top: 0.3rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+.add-account-form button {
+  min-width: 110px;
+}
+
+/* Ajout d'effets et d'éléments visuels pour un style trading moderne */
+
+body {
+  background: linear-gradient(120deg, #1a1d22 0%, #23272f 100%);
+  min-height: 100vh;
+}
+
+.app-container {
+  /* Ajout d'un léger effet de fond dynamique */
+  position: relative;
+  overflow-x: hidden;
+}
+.app-container::before {
+  content: '';
+  position: fixed;
+  top: -20vh; left: -20vw; width: 140vw; height: 140vh;
+  background: radial-gradient(circle at 70% 30%, #4fd1c511 0%, transparent 70%),
+              radial-gradient(circle at 20% 80%, #ffd70011 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.navbar {
+  background: rgba(35, 40, 58, 0.92);
+  border-bottom: 2px solid #e2c97b22;
+  box-shadow: 0 4px 24px #0002;
+}
+.logo {
+  letter-spacing: 3px;
+  font-size: 2rem;
+  color: #e2c97b;
+  text-shadow: 0 2px 8px #e2c97b22;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.cta-button {
+  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
+  color: #23272f;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: 40px;
+  box-shadow: 0 4px 24px #ffd70022, 0 2px 8px #4fd1c522;
+  border: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.cta-button:hover {
+  background: linear-gradient(90deg, #4fd1c5 0%, #ffd700 100%);
+  color: #181c25;
+  transform: scale(1.05) translateY(-2px);
+}
+
+.dashboard-card {
+  border: 2px solid #4fd1c533;
+  box-shadow: 0 2px 16px #4fd1c522, 0 1px 4px #ffd70022;
+  position: relative;
+  overflow: hidden;
+  padding: 1.2rem 1rem;
+  text-align: left;
+}
+.dashboard-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
+  opacity: 0.7;
+}
+.dashboard-card h3 {
+  letter-spacing: 1px;
+  font-size: 1.18rem;
+  color: #ffd700;
+  text-shadow: 0 1px 6px #ffd70022;
+}
+
+/* Ajout d'un effet de glow sur les badges */
+.asset-badge {
+  box-shadow: 0 0 8px #ffd70055, 0 1px 4px #4fd1c522;
+}
+.action-badge {
+  box-shadow: 0 0 8px #38b2ac55, 0 1px 4px #ffd70022;
+}
+
+/* Effet de survol sur les tableaux */
+.transactions-table tbody tr:hover, .volatility-table tbody tr:hover, .performances-table tbody tr:hover {
+  background: #23272f !important;
+  box-shadow: 0 2px 12px #4fd1c522;
+  cursor: pointer;
+}
+
+/* Notifications */
+.notifications-list.card {
+  border: 2px solid #ffd70033;
+  background: linear-gradient(120deg, #23283a 80%, #181c25 100%);
+  box-shadow: 0 2px 16px #ffd70022, 0 1px 4px #4fd1c522;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.logo {
+  position: static;
+  left: unset;
+  top: unset;
+  transform: none;
+  margin-right: 2rem;
+}
+.nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.user-info-left {
+  position: static;
+  left: unset;
+  top: unset;
+  transform: none;
+  margin-left: 2rem;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+}

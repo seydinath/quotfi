@@ -149,12 +149,15 @@ button:hover, .btn:hover {
 
 /* --- RESPONSIVE --- */
 @media (max-width: 1200px) {
-  .dashboard-cards {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+  .dashboard {
+    max-width: 98vw;
   }
-  .dashboard-main-left, .dashboard-main-right {
-    flex: 1 1 100%;
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .dashboard-main-right {
+    max-width: 100%;
     min-width: 0;
   }
 }
@@ -176,8 +179,29 @@ button:hover, .btn:hover {
   .dashboard-cards {
     grid-template-columns: 1fr;
   }
+  .sidebar {
+    width: 60px;
+    min-width: 60px;
+    padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+  .dashboard-main {
+    margin-left: 60px;
+  }
+  .sidebar .logo {
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .sidebar .nav-links button {
+    font-size: 0.98rem;
+    padding: 0.5rem 0.5rem;
+  }
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .app-container, .main-content {
     padding: 0.5rem;
   }
@@ -209,6 +233,39 @@ button:hover, .btn:hover {
   }
   .cac40-graph-labels span {
     font-size: 0.8rem;
+  }
+  .sidebar {
+    position: static;
+    width: 100vw;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5rem 0.2rem;
+    box-shadow: 0 2px 12px #0005;
+  }
+  .dashboard-main {
+    margin-left: 0;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+  }
+  .sidebar .logo {
+    font-size: 1rem;
+    margin-bottom: 0;
+    margin-right: 1rem;
+  }
+  .sidebar .nav-links {
+    flex-direction: row;
+    gap: 0.7rem;
+    width: auto;
+  }
+  .sidebar .nav-links button {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.5rem;
+  }
+  .sidebar .sidebar-footer {
+    display: none;
   }
 }
 
@@ -370,11 +427,15 @@ body {
   box-shadow: 0 -2px 12px #4fd1c522;
 }
 
-/* Dashboard grid */
+/* Dashboard */
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+}
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 2.2fr 1.1fr;
+  gap: 3.5rem;
   margin-top: 2rem;
 }
 .dashboard-main-left, .dashboard-main-right {
@@ -382,25 +443,18 @@ body {
   flex-direction: column;
   gap: 0;
 }
-@media (max-width: 1000px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+.dashboard-main-left {
+  min-width: 0;
+  flex: 1 1 0%;
 }
-
-/* Cartes et blocs principaux */
-.dashboard-cards, .dashboard-summary, .dashboard-cac40-graph, .dashboard-performances, .dashboard-account-summary, .dashboard-portfolio-cards, .dashboard-volatility, .dashboard-volatility-recap {
-  background: #23283a;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(26,34,54,0.10);
-  padding: 1.5rem 1.2rem;
-  margin-bottom: 1.5rem;
+.dashboard-main-right {
+  min-width: 340px;
+  max-width: 420px;
 }
 .dashboard-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
   background: #23283a;
 }
 .dashboard-card {
@@ -408,778 +462,602 @@ body {
   box-shadow: 0 2px 16px #4fd1c522, 0 1px 4px #ffd70022;
   position: relative;
   overflow: hidden;
-  padding: 1.2rem 1rem;
-  text-align: left;
-}
-.dashboard-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
-  opacity: 0.7;
-}
-.dashboard-card h3 {
-  letter-spacing: 1px;
-  font-size: 1.18rem;
-  color: #ffd700;
-  text-shadow: 0 1px 6px #ffd70022;
-}
-.dashboard-card p {
-  margin: 0.3rem 0;
-  font-size: 1rem;
-  color: #e2e6f3;
-}
-.up {
-  color: #7fc8b2 !important;
-}
-.down {
-  color: #e07a7a !important;
-}
-
-.dashboard-summary, .dashboard-cac40-graph, .dashboard-performances, .dashboard-account-summary, .dashboard-portfolio-cards, .dashboard-volatility, .dashboard-volatility-recap {
-  background: #23283a;
-  color: #e2e6f3;
-}
-.dashboard-summary h4, .dashboard-cac40-graph h4, .dashboard-performances h4, .dashboard-account-summary h4, .dashboard-volatility h4, .dashboard-volatility-recap h4 {
-  color: #4fd1c5;
-}
-
-/* Tableaux */
-.volatility-table, .performances-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 1rem;
-}
-.volatility-table th, .volatility-table td, .performances-table th, .performances-table td {
-  padding: 0.6rem 0.4rem;
-  text-align: left;
-}
-.volatility-table th, .performances-table th {
-  background: #262b3a;
-  color: #4fd1c5;
-  font-weight: 600;
-  border-bottom: 2px solid #38b2ac33;
-  margin: 0 0 0.5rem 0;
-  font-size: 1.05rem;
-}
-.portfolio-value {
-  color: #4fd1c5;
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-.portfolio-total {
-  color: #e2e6f3;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-/* Graphique CAC 40 */
-.cac40-graph {
-  width: 100%;
-  height: 80px;
-  margin-bottom: 0.5rem;
-}
-.cac40-graph-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.95rem;
-  color: #b0b6c3;
-  margin: 0 0.5rem;
-}
-
-/* Performances */
-.performances-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.see-all-link {
-  color: #b5b5b5;
-  text-decoration: none;
-  font-size: 0.98rem;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.see-all-link:hover {
-  color: #e2c97b;
-  text-decoration: underline;
-}
-
-/* Résumé du compte */
-.dashboard-account-summary ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.dashboard-account-summary li {
-  font-size: 1rem;
-  color: #b0b6c3;
-  margin-bottom: 0.5rem;
-}
-.dashboard-account-summary strong {
-  color: #e2e6f3;
-}
-
-/* Récap volatilité */
-.dashboard-volatility-recap ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.dashboard-volatility-recap li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.3rem;
-  color: #b0b6c3;
-}
-.dashboard-volatility-recap .up {
-  color: #4fd1c5;
-  font-weight: bold;
-}
-.dashboard-volatility-recap .down {
-  color: #e53e3e;
-  font-weight: bold;
-}
-
-/* Marchés */
-.page-section {
-  background: #23283a;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(26,34,54,0.10);
   padding: 2rem 1.5rem;
-  margin: 2rem auto;
-  max-width: 900px;
-  color: #e2e6f3;
-}
-.page-section h2 {
-  color: #4fd1c5;
-  margin-bottom: 1.5rem;
-}
-
-.markets-table-wrapper {
-  overflow-x: auto;
-}
-.markets-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 1rem;
-}
-.markets-table th, .markets-table td {
-  padding: 0.7rem 0.5rem;
   text-align: left;
+  min-width: 240px;
+  max-width: 100%;
 }
-.markets-table th {
-  background: #262b3a;
-  color: #4fd1c5;
-  font-weight: 600;
-  border-bottom: 2px solid #38b2ac33;
-}
-.markets-table tr:nth-child(even) {
-  background: #23283a;
-}
-.markets-table tr:nth-child(odd) {
-  background: #262b3a;
-}
-.markets-table td.up {
-  color: #4fd1c5;
-  font-weight: bold;
-}
-.markets-table td.down {
-  color: #e53e3e;
-  font-weight: bold;
-}
-.markets-table tr.selected {
-  background: #2d3347 !important;
-  outline: 2px solid #4fd1c5;
-}
-.markets-table tr:hover {
-  background: #23283a;
-}
-
-/* Analyses */
-.analyses-list {
+.sidebar {
+  width: 170px;
+  min-width: 170px;
+  max-width: 100vw;
+  background: #181b20;
+  color: #ffd700;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-.analysis-item {
-  background: #262b3a;
-  border-radius: 10px;
-  padding: 1.2rem 1rem;
-  box-shadow: 0 1px 4px rgba(79,209,197,0.07);
-}
-.analysis-item h3 {
-  color: #4fd1c5;
-  margin-top: 0;
-}
-.analysis-item p {
-  color: #e2e6f3;
-  margin-bottom: 0;
-}
-
-/* Modal graphique marchés */
-.markets-chart-modal {
+  align-items: flex-start;
+  padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  box-shadow: 2px 0 16px #0005;
+  z-index: 100;
+  min-height: 100vh;
+  height: 100vh;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(24,28,37,0.85);
+  left: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: flex-start;
+  transition: width 0.2s;
+}
+.sidebar .logo {
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 2rem;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  text-align: left;
+  padding-left: 0.1rem;
+  order: 0;
+}
+.sidebar > .logo {
+  margin-top: 0;
+  padding-top: 0;
+}
+.sidebar .user-info-left {
+  margin-bottom: 1.5rem;
+  color: #b5e3e8;
+  font-size: 1.08rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  justify-content: flex-start;
+  width: 100%;
+  padding-left: 0.1rem;
 }
-.markets-chart-content {
-  background: #23283a;
-  border-radius: 14px;
-  box-shadow: 0 4px 24px rgba(26,34,54,0.18);
-  padding: 2rem 2.5rem 1.5rem 2.5rem;
-  text-align: center;
-  color: #e2e6f3;
-  min-width: 340px;
-  max-width: 95vw;
-}
-.markets-chart-content h3 {
-  color: #4fd1c5;
-  margin-bottom: 1.2rem;
-}
-.close-modal {
-  margin-top: 1.5rem;
-  background: #4fd1c5;
-  color: #181c25;
-  border: none;
-  border-radius: 22px;
-  padding: 0.6rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.close-modal:hover {
-  background: #38b2ac;
-}
-
-/* Transactions design */
-.transactions-section {
-  max-width: 700px;
-  margin: 0 auto;
-}
-.transactions-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #4fd1c5;
-}
-.transaction-form.card {
-  background: #23272f;
-  border-radius: 1rem;
-  box-shadow: 0 2px 16px #0002;
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
-  margin-bottom: 2rem;
+.sidebar .nav-links {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-}
-.form-row {
-  display: flex;
-  gap: 1.5rem;
-}
-.transaction-form label {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-  color: #b5b5b5;
-  gap: 0.3rem;
-}
-.transaction-form select,
-.transaction-form input[type="number"] {
-  background: #181b20;
-  color: #fff;
-  border: 1px solid #333;
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.7rem;
-  font-size: 1rem;
-  margin-top: 0.2rem;
-}
-.add-transaction-btn {
-  align-self: flex-end;
-  margin-top: 0.5rem;
-  background: linear-gradient(90deg, #38b2ac, #4fd1c5);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.7rem 1.5rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 2px 8px #0002;
-  transition: background 0.2s;
-}
-.add-transaction-btn:hover {
-  background: linear-gradient(90deg, #4fd1c5, #38b2ac);
-}
-.transactions-list.card {
-  background: #23272f;
-  border-radius: 1rem;
-  box-shadow: 0 2px 16px #0002;
-  padding: 1.5rem 1rem;
-  margin-bottom: 2rem;
-}
-.transactions-list-title {
-  color: #4fd1c5;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-.transactions-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 1rem;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-.transactions-table th, .transactions-table td {
-  padding: 0.6rem 0.5rem;
-  text-align: center;
-}
-.transactions-table thead th {
-  background: #181b20;
-  color: #4fd1c5;
-  font-weight: 600;
-}
-.transactions-table tbody tr {
-  border-bottom: 1px solid #333;
-}
-.transactions-table tbody tr:last-child {
-  border-bottom: none;
-}
-.asset-badge {
-  background: #4fd1c5;
-  color: #181b20;
-  border-radius: 0.5rem;
-  padding: 0.2rem 0.7rem;
-  font-weight: 600;
-  font-size: 0.98rem;
-  box-shadow: 0 0 8px #ffd70055, 0 1px 4px #4fd1c522;
-}
-.action-badge {
-  border-radius: 0.5rem;
-  padding: 0.2rem 0.7rem;
-  font-weight: 600;
-  font-size: 0.98rem;
-  color: #fff;
-  display: inline-block;
-  box-shadow: 0 0 8px #38b2ac55, 0 1px 4px #ffd70022;
-}
-.action-buy { background: #38b2ac; }
-.action-sell { background: #e53e3e; }
-.action-short { background: #805ad5; }
-.action-limit { background: #ecc94b; color: #181b20; }
-.action-stop { background: #f56565; }
-.empty-tx {
-  text-align: center;
-  color: #888;
-  font-style: italic;
-  margin: 1.5rem 0;
-}
-@media (max-width: 700px) {
-  .transactions-section, .transactions-list.card, .transaction-form.card {
-    padding: 0.5rem !important;
-  }
-  .form-row {
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-}
-
-/* Accounts (Mon Compte) */
-.accounts-section {
-  max-width: 900px;
-  margin: 0 auto;
-}
-.accounts-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #4fd1c5;
-}
-.accounts-details.card, .accounts-funds.card, .accounts-movements.card, .accounts-movements-summary.card, .accounts-pending.card, .accounts-closed.card {
-  background: #23272f;
-  border-radius: 1rem;
-  box-shadow: 0 2px 16px #0002;
-  padding: 1.5rem 1rem;
-  margin-bottom: 1.5rem;
-}
-.account-info-list, .funds-list, .movements-summary-list, .pending-list, .closed-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.account-info-list li, .funds-list li, .movements-summary-list li {
-  margin-bottom: 0.5rem;
-  font-size: 1.08rem;
-}
-.funds-badge {
-  background: #4fd1c5;
-  color: #181b20;
-  border-radius: 0.5rem;
-  padding: 0.2rem 0.7rem;
-  font-weight: 600;
-  font-size: 1rem;
-}
-.funds-badge.pending {
-  background: #ecc94b;
-  color: #181b20;
-}
-.funds-badge.waiting {
-  background: #805ad5;
-  color: #fff;
-}
-.accounts-ops-movements {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-.accounts-movements.card {
-  flex: 2;
-  min-width: 320px;
-}
-.accounts-movements-summary.card {
-  flex: 1;
-  min-width: 220px;
-  align-self: flex-start;
-}
-.movements-table {
+.sidebar .nav-links li {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 1rem;
 }
-.movements-table th, .movements-table td {
-  padding: 0.6rem 0.5rem;
-  text-align: center;
-}
-.movements-table thead th {
-  background: #181b20;
-  color: #4fd1c5;
-  font-weight: 600;
-}
-.movements-table tbody tr {
-  border-bottom: 1px solid #333;
-}
-.movements-table tbody tr:last-child {
-  border-bottom: none;
-}
-.credit {
-  color: #38b2ac;
-  font-weight: 600;
-}
-.debit {
-  color: #e53e3e;
-  font-weight: 600;
-}
-.pending-list li, .closed-list li {
-  margin-bottom: 0.5rem;
-  font-size: 1.05rem;
-}
-@media (max-width: 900px) {
-  .accounts-ops-movements {
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-}
-
-/* AuthGate, Login, Register styles */
-.authgate-outer {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(120deg, #181b20 60%, #23262b 100%);
-}
-.authgate-center.card {
-  background: #181b20;
-  color: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 2px 24px #000a;
-  max-width: 410px;
+.sidebar .nav-links button {
   width: 100%;
-  margin: 0 auto;
-  padding: 2.7rem 2.2rem 2.2rem 2.2rem;
-  border: 1.5px solid #23262b;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.authgate-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2.2rem;
-}
-.logo-large {
-  font-size: 2.3rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  color: #38b2ac;
-  text-shadow: 0 2px 12px #38b2ac33;
-  font-family: 'Segoe UI', 'Arial', sans-serif;
-}
-.login-container.card {
-  background: #181b20;
-  color: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 2px 16px #000a;
-  max-width: 370px;
-  margin: 3rem auto;
-  padding: 2.5rem 2rem 2rem 2rem;
-  border: 1px solid #23262b;
-}
-.login-form label {
-  display: block;
-  margin-bottom: 1.2rem;
-  font-weight: 500;
-}
-.login-form input[type="email"],
-.login-form input[type="password"] {
-  width: 100%;
-  padding: 0.7rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #333;
-  background: #23262b;
-  color: #fff;
-  font-size: 1.05rem;
-  margin-top: 0.4rem;
-  transition: border 0.2s;
-}
-.login-form input:focus {
-  border: 1.5px solid #38b2ac;
-  outline: none;
-}
-.cta-button {
-  background: linear-gradient(90deg, #38b2ac 0%, #4fd1c5 100%);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.8rem 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 8px #0004;
-  transition: background 0.2s;
-}
-.cta-button:hover {
-  background: linear-gradient(90deg, #319795 0%, #38b2ac 100%);
-}
-.login-footer {
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #aaa;
-}
-.link-button {
   background: none;
   border: none;
-  color: #38b2ac;
+  color: #ffd700;
+  font-size: 1.08rem;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-radius: 0.6rem;
+  transition: background 0.2s, color 0.2s;
   cursor: pointer;
-  font-weight: 600;
-  margin-left: 0.3rem;
-  font-size: 1rem;
-  text-decoration: underline;
-  padding: 0;
+  justify-content: flex-start;
+  display: flex;
 }
-.link-button:hover {
+.sidebar .nav-links button.active, .sidebar .nav-links button:hover {
+  background: #23272f;
   color: #4fd1c5;
 }
-.form-error {
-  color: #e53e3e;
-  background: #2d2323;
-  border-radius: 0.4rem;
-  padding: 0.5rem 1rem;
-  margin-bottom: 0.7rem;
+.sidebar .sidebar-footer {
+  margin-top: auto;
+  color: #b5e3e8;
   font-size: 0.98rem;
-}
-.register-success {
-  color: #38b2ac;
-  background: #1a2320;
-  border-radius: 0.5rem;
-  padding: 1.2rem 1rem;
   text-align: center;
-  font-size: 1.08rem;
+  width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 0.7rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: none;
+}
+@media (max-width: 900px) {
+  .sidebar {
+    width: 60px;
+    min-width: 60px;
+    padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+  .dashboard-main {
+    margin-left: 60px;
+  }
+  .sidebar .logo {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-left: 0.1rem;
+  }
+  .sidebar .nav-links button {
+    font-size: 0.98rem;
+    padding: 0.5rem 0.5rem;
+  }
+  .sidebar .sidebar-footer {
+    font-size: 0.85rem;
+    padding-top: 1rem;
+  }
+}
+@media (max-width: 700px) {
+  .sidebar {
+    position: static;
+    width: 100vw;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.5rem 0.2rem;
+    box-shadow: 0 2px 12px #0005;
+  }
+  .sidebar .logo {
+    font-size: 1rem;
+    margin-bottom: 0;
+    margin-right: 1rem;
+    padding-left: 0;
+  }
+  .sidebar .user-info-left {
+    margin-bottom: 0;
+    margin-right: 1rem;
+    font-size: 0.98rem;
+    padding-left: 0;
+  }
+  .sidebar .nav-links {
+    flex-direction: row;
+    gap: 0.7rem;
+    width: auto;
+    flex: none;
+    align-items: center;
+  }
+  .sidebar .nav-links button {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.5rem;
+    width: auto;
+    text-align: center;
+    justify-content: center;
+  }
+  .sidebar .sidebar-footer {
+    position: static;
+    margin-top: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: auto;
+    font-size: 0.85rem;
+    text-align: right;
+    margin-left: auto;
+    color: #b5e3e8;
+    background: none;
+    display: block;
+  }
 }
 
-/* Modal overlay for add account */
+/* Ajout d'un espace visuel entre la sidebar et le contenu principal */
+.app-container.dashboard-layout {
+  display: flex;
+}
+.sidebar {
+  box-shadow: 2px 0 12px #0003;
+  z-index: 10;
+}
+.main-content.dashboard-main {
+  flex: 1;
+  padding-left: 4rem; /* Ajoute un espace à gauche du contenu principal */
+  min-width: 0;
+  transition: padding-left 0.2s;
+}
+@media (max-width: 900px) {
+  .main-content.dashboard-main {
+    padding-left: 1.5rem;
+  }
+}
+/* Optionnel : réduit l'espace sur mobile */
+@media (max-width: 600px) {
+  .main-content.dashboard-main {
+    padding-left: 0.5rem;
+  }
+}
+
+/* --- ACCOUNTS SECTION MODERNIZATION --- */
+.accounts-management.card {
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin-bottom: 2.2rem;
+  background: rgba(24,28,37,0.97);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px #4fd1c522, 0 1px 4px #ffd70022;
+  border: 2px solid #4fd1c533;
+}
+.accounts-list {
+  list-style: none;
+  margin: 0 0 1.5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.accounts-list li {
+  background: #23272f;
+  border-radius: 0.8rem;
+  padding: 1.1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 1.08rem;
+  color: #e2c97b;
+  box-shadow: 0 1px 6px #0003;
+  border: 1.5px solid #23283a;
+}
+.account-type-badge {
+  background: linear-gradient(90deg,#4fd1c5 0%,#ffd700 100%);
+  color: #23272f;
+  font-weight: 700;
+  border-radius: 1.2rem;
+  padding: 0.3rem 1.1rem;
+  font-size: 0.98rem;
+  margin-left: 0.7rem;
+  box-shadow: 0 1px 6px #4fd1c522;
+}
+.accounts-list li span {
+  font-size: 1.05rem;
+}
+
+/* --- ADD ACCOUNT MODAL --- */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.65);
-  z-index: 1000;
+  background: rgba(24,28,37,0.85);
+  z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .modal-content {
   background: #23272f;
-  border-radius: 1rem;
-  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 32px #0008, 0 1px 8px #ffd70022;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
   min-width: 320px;
   max-width: 95vw;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  border: 2px solid #4fd1c533;
   position: relative;
-  color: #fff;
-  animation: modalIn 0.2s cubic-bezier(.4,1.6,.6,1) both;
-}
-@keyframes modalIn {
-  from { transform: scale(0.95) translateY(30px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
 }
 .add-account-form label {
-  display: block;
-  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1.1rem;
+  color: #b5e3e8;
+  font-weight: 600;
 }
-.add-account-form input,
-.add-account-form select {
-  width: 100%;
-  padding: 0.7rem 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #333;
+.add-account-form input, .add-account-form select {
   background: #181b20;
-  color: #fff;
+  color: #ffd700;
+  border: 1.5px solid #4fd1c5;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
   font-size: 1.05rem;
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.add-account-form input:focus, .add-account-form select:focus {
+  border: 1.5px solid #ffd700;
 }
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1.2rem;
-}
-.add-account-form button {
-  min-width: 110px;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
 }
 
-/* Ajout d'effets et d'éléments visuels pour un style trading moderne */
-
-body {
-  background: linear-gradient(120deg, #1a1d22 0%, #23272f 100%);
-  min-height: 100vh;
+/* --- TRANSACTION FORM MODERNIZATION --- */
+.transaction-form.card {
+  background: rgba(24,28,37,0.97);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px #4fd1c522, 0 1px 4px #ffd70022;
+  border: 2px solid #4fd1c533;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  margin-top: 2.2rem;
+  margin-bottom: 2.2rem;
+  max-width: 700px;
+}
+.transaction-form .form-row {
+  display: flex;
+  gap: 2.2rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+.transaction-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #b5e3e8;
+  font-weight: 600;
+  min-width: 180px;
+  flex: 1 1 180px;
+}
+.transaction-form select, .transaction-form input[type="number"] {
+  background: #181b20;
+  color: #ffd700;
+  border: 1.5px solid #4fd1c5;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  outline: none;
+  transition: border 0.2s;
+}
+.transaction-form select:focus, .transaction-form input[type="number"]:focus {
+  border: 1.5px solid #ffd700;
+}
+.add-transaction-btn {
+  margin-top: 0.7rem;
+  width: 100%;
+  font-size: 1.13rem;
+  padding: 0.9rem 0;
 }
 
-.app-container {
-  /* Ajout d'un léger effet de fond dynamique */
-  position: relative;
-  overflow-x: hidden;
+/* --- ACCOUNTS LIST GRID LAYOUT --- */
+.accounts-list.accounts-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
 }
-.app-container::before {
-  content: '';
-  position: fixed;
-  top: -20vh; left: -20vw; width: 140vw; height: 140vh;
-  background: radial-gradient(circle at 70% 30%, #4fd1c511 0%, transparent 70%),
-              radial-gradient(circle at 20% 80%, #ffd70011 0%, transparent 70%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.navbar {
-  background: rgba(35, 40, 58, 0.92);
-  border-bottom: 2px solid #e2c97b22;
-  box-shadow: 0 4px 24px #0002;
-}
-.logo {
-  letter-spacing: 3px;
-  font-size: 2rem;
+.accounts-list.accounts-list-grid li {
+  background: #23272f;
+  border-radius: 0.8rem;
+  padding: 1.3rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  font-size: 1.08rem;
   color: #e2c97b;
-  text-shadow: 0 2px 8px #e2c97b22;
+  box-shadow: 0 1px 6px #0003;
+  border: 1.5px solid #23283a;
+  min-width: 0;
+  min-height: 120px;
+  transition: box-shadow 0.18s, border 0.18s;
+}
+.accounts-list.accounts-list-grid li:hover {
+  border: 1.5px solid #4fd1c5;
+  box-shadow: 0 4px 18px #4fd1c522;
+}
+.accounts-list.accounts-list-grid strong {
+  color: #ffd700;
+  font-size: 1.13rem;
+}
+.accounts-list.accounts-list-grid .account-type-badge {
+  margin-left: 0;
+}
+@media (max-width: 700px) {
+  .accounts-list.accounts-list-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .accounts-list.accounts-list-grid li {
+    padding: 1rem 0.7rem;
+  }
+}
+
+/* --- ACCOUNTS MAIN GRID --- */
+.accounts-main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2.2rem;
+  margin-bottom: 2.2rem;
+}
+.accounts-grid-item {
+  min-width: 0;
+}
+@media (max-width: 1100px) {
+  .accounts-main-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .accounts-main-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+}
+
+/* --- ACCOUNTS MANAGEMENT GRID --- */
+.accounts-management-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.accounts-management-grid .accounts-list-grid {
+  grid-column: 1/-1;
+}
+.accounts-management-grid .cta-button {
+  grid-column: 1/-1;
+  justify-self: start;
+}
+@media (max-width: 1100px) {
+  .accounts-management-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .accounts-management-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+}
+
+/* --- MODAL POUR LES GRAPHIQUES DES ACTIFS --- */
+.markets-chart-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(24,28,37,0.85);
+  z-index: 2000;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  justify-content: center;
+  animation: fadeIn 0.2s;
 }
-
-.cta-button {
-  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.markets-chart-modal {
+  background: #23272f;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 32px #0008, 0 1px 8px #ffd70022;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  min-width: 340px;
+  max-width: 95vw;
+  border: 2px solid #4fd1c533;
+  position: relative;
+  animation: popIn 0.2s;
+}
+@keyframes popIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.markets-chart-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.close-modal {
+  margin-top: 1.2rem;
+  background: linear-gradient(90deg,#ffd700 0%,#4fd1c5 100%);
   color: #23272f;
   font-weight: 700;
-  letter-spacing: 0.5px;
   border-radius: 40px;
-  box-shadow: 0 4px 24px #ffd70022, 0 2px 8px #4fd1c522;
   border: none;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.08rem;
+  cursor: pointer;
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
-.cta-button:hover {
-  background: linear-gradient(90deg, #4fd1c5 0%, #ffd700 100%);
+.close-modal:hover {
+  background: linear-gradient(90deg,#4fd1c5 0%,#ffd700 100%);
   color: #181c25;
   transform: scale(1.05) translateY(-2px);
 }
+@media (max-width: 700px) {
+  .markets-chart-modal {
+    padding: 1.1rem 0.7rem 1.1rem 0.7rem;
+    min-width: 0;
+  }
+}
 
-.dashboard-card {
-  border: 2px solid #4fd1c533;
+/* --- LOGIN CARD --- */
+.login-card.card {
+  max-width: 420px;
+  margin: 4rem auto 0 auto;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  background: rgba(24,28,37,0.97);
+  border-radius: 1.2rem;
   box-shadow: 0 2px 16px #4fd1c522, 0 1px 4px #ffd70022;
-  position: relative;
-  overflow: hidden;
-  padding: 1.2rem 1rem;
-  text-align: left;
+  border: 2px solid #4fd1c533;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
-.dashboard-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, #ffd700 0%, #4fd1c5 100%);
-  opacity: 0.7;
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: #b5e3e8;
+  font-weight: 600;
+  margin-bottom: 1.1rem;
 }
-.dashboard-card h3 {
-  letter-spacing: 1px;
-  font-size: 1.18rem;
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  background: #181b20;
   color: #ffd700;
-  text-shadow: 0 1px 6px #ffd70022;
+  border: 1.5px solid #4fd1c5;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  outline: none;
+  transition: border 0.2s;
 }
-
-/* Ajout d'un effet de glow sur les badges */
-.asset-badge {
-  box-shadow: 0 0 8px #ffd70055, 0 1px 4px #4fd1c522;
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  border: 1.5px solid #ffd700;
 }
-.action-badge {
-  box-shadow: 0 0 8px #38b2ac55, 0 1px 4px #ffd70022;
+.form-error {
+  color: #e53e3e;
+  background: #23272f;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.05rem;
 }
-
-/* Effet de survol sur les tableaux */
-.transactions-table tbody tr:hover, .volatility-table tbody tr:hover, .performances-table tbody tr:hover {
-  background: #23272f !important;
-  box-shadow: 0 2px 12px #4fd1c522;
+.login-footer {
+  margin-top: 1.1rem;
+  color: #b5e3e8;
+  font-size: 1.01rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.link-button {
+  background: none;
+  border: none;
+  color: #4fd1c5;
+  font-weight: 700;
   cursor: pointer;
+  text-decoration: underline;
+  font-size: 1.01rem;
+  padding: 0;
+  margin: 0;
+  transition: color 0.2s;
+}
+.link-button:hover {
+  color: #ffd700;
+}
+@media (max-width: 600px) {
+  .login-card.card {
+    padding: 1.1rem 0.7rem 1.1rem 0.7rem;
+    min-width: 0;
+  }
 }
 
-/* Notifications */
-.notifications-list.card {
-  border: 2px solid #ffd70033;
-  background: linear-gradient(120deg, #23283a 80%, #181c25 100%);
-  box-shadow: 0 2px 16px #ffd70022, 0 1px 4px #4fd1c522;
+/* --- SPINNER DE CHARGEMENT --- */
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #ffd700;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  animation: spin 0.8s linear infinite;
 }
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-.logo {
-  position: static;
-  left: unset;
-  top: unset;
-  transform: none;
-  margin-right: 2rem;
+
+/* --- TABLES ACCESSIBLES --- */
+.transactions-table, .dashboard-tx-table, .dashboard-hedge-table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
 }
-.nav-links {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.user-info-left {
-  position: static;
-  left: unset;
-  top: unset;
-  transform: none;
-  margin-left: 2rem;
-  margin-right: 0;
-  display: flex;
-  align-items: center;
+@media (max-width: 700px) {
+  .transactions-table, .dashboard-tx-table, .dashboard-hedge-table {
+    font-size: 0.93rem;
+    min-width: 520px;
+    /* Permet le scroll horizontal sur mobile */
+  }
 }

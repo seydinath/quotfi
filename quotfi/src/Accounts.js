@@ -58,28 +58,28 @@ function Accounts() {
   return (
     <section className="page-section accounts-section">
       <h2 className="accounts-title">Mon Compte</h2>
-      <div className="accounts-details card">
-        <h3>Détails bancaires</h3>
-        <ul className="account-info-list">
-          <li><strong>Nom :</strong> {user.name}</li>
-          <li><strong>IBAN :</strong> {user.iban}</li>
-          <li><strong>BIC :</strong> {user.bic}</li>
-          <li><strong>Adresse :</strong> {user.address}</li>
-          <li><strong>Email :</strong> {user.email}</li>
-          <li><strong>Téléphone :</strong> {user.phone}</li>
-        </ul>
-      </div>
-      <div className="accounts-funds card">
-        <h3>Fonds & Soldes</h3>
-        <ul className="funds-list">
-          <li><strong>Solde actuel :</strong> <span className="funds-badge">{balance.toLocaleString()} €</span></li>
-          <li><strong>Solde provisoire :</strong> <span className="funds-badge pending">{(balance - pending).toLocaleString()} €</span></li>
-          <li><strong>Fonds en attente :</strong> <span className="funds-badge waiting">{pending.toLocaleString()} €</span></li>
-        </ul>
-      </div>
-      <div className="accounts-ops-movements">
-        <div className="accounts-movements card">
-          <h3>Mouvements du compte</h3>
+      <div className="accounts-main-grid">
+        <div className="accounts-details card accounts-grid-item">
+          <h3 style={{color:'#4fd1c5',marginBottom:'1.1rem'}}>Détails bancaires</h3>
+          <ul className="account-info-list">
+            <li><strong>Nom :</strong> {user.name}</li>
+            <li><strong>IBAN :</strong> {user.iban}</li>
+            <li><strong>BIC :</strong> {user.bic}</li>
+            <li><strong>Adresse :</strong> {user.address}</li>
+            <li><strong>Email :</strong> {user.email}</li>
+            <li><strong>Téléphone :</strong> {user.phone}</li>
+          </ul>
+        </div>
+        <div className="accounts-funds card accounts-grid-item">
+          <h3 style={{color:'#ffd700',marginBottom:'1.1rem'}}>Fonds & Soldes</h3>
+          <ul className="funds-list">
+            <li><strong>Solde actuel :</strong> <span className="funds-badge">{balance.toLocaleString()} €</span></li>
+            <li><strong>Solde provisoire :</strong> <span className="funds-badge pending">{(balance - pending).toLocaleString()} €</span></li>
+            <li><strong>Fonds en attente :</strong> <span className="funds-badge waiting">{pending.toLocaleString()} €</span></li>
+          </ul>
+        </div>
+        <div className="accounts-movements card accounts-grid-item">
+          <h3 style={{color:'#4fd1c5',marginBottom:'1.1rem'}}>Mouvements du compte</h3>
           <table className="movements-table">
             <thead>
               <tr>
@@ -99,30 +99,30 @@ function Accounts() {
             </tbody>
           </table>
         </div>
-        <div className="accounts-movements-summary card">
-          <h3>Résumé mouvements</h3>
+        <div className="accounts-movements-summary card accounts-grid-item">
+          <h3 style={{color:'#ffd700',marginBottom:'1.1rem'}}>Résumé mouvements</h3>
           <ul className="movements-summary-list">
             <li><strong>Total crédits :</strong> <span className="credit">{totalCredit} €</span></li>
             <li><strong>Total débits :</strong> <span className="debit">{totalDebit} €</span></li>
             <li><strong>Nombre de mouvements :</strong> {totalMovements}</li>
           </ul>
         </div>
-      </div>
-      <div className="accounts-pending card">
-        <h3>Opérations en cours</h3>
-        <ul className="pending-list">
-          {pendingOps.map((op, i) => (
-            <li key={i}><span>{op.date}</span> — {op.label} <span className="debit">{op.amount} €</span></li>
-          ))}
-        </ul>
-      </div>
-      <div className="accounts-closed card">
-        <h3>Transactions clôturées</h3>
-        <ul className="closed-list">
-          {closedTx.map((tx, i) => (
-            <li key={i}><span>{tx.date}</span> — {tx.label} <span className={tx.amount > 0 ? "credit" : "debit"}>{tx.amount > 0 ? "+" : ""}{tx.amount} €</span></li>
-          ))}
-        </ul>
+        <div className="accounts-pending card accounts-grid-item">
+          <h3 style={{color:'#4fd1c5',marginBottom:'1.1rem'}}>Opérations en cours</h3>
+          <ul className="pending-list">
+            {pendingOps.map((op, i) => (
+              <li key={i}><span>{op.date}</span> — {op.label} <span className="debit">{op.amount} €</span></li>
+            ))}
+          </ul>
+        </div>
+        <div className="accounts-closed card accounts-grid-item">
+          <h3 style={{color:'#ffd700',marginBottom:'1.1rem'}}>Transactions clôturées</h3>
+          <ul className="closed-list">
+            {closedTx.map((tx, i) => (
+              <li key={i}><span>{tx.date}</span> — {tx.label} <span className={tx.amount > 0 ? "credit" : "debit"}>{tx.amount > 0 ? "+" : ""}{tx.amount} €</span></li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

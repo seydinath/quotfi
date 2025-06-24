@@ -11,10 +11,18 @@ app.use(express.json());
 const userRoutes = require('./routes/user');
 const couvertureRoutes = require('./routes/couverture');
 const transactionRoutes = require('./routes/transaction');
+const marketsRoutes = require('./routes/markets');
+const marketsHistoryRouter = require('./routes/marketsHistory');
+const topVolatilityRouter = require('./routes/topVolatility');
+const accountRoutes = require('./routes/account');
 
 app.use('/api/users', userRoutes);
 app.use('/api/couvertures', couvertureRoutes);
 app.use('/api/transactions', transactionRoutes);
+app.use('/api/markets', marketsRoutes);
+app.use('/api/markets', marketsHistoryRouter);
+app.use('/api/markets/top-volatility', topVolatilityRouter);
+app.use('/api/accounts', accountRoutes);
 
 app.get('/', (req, res) => {
   res.send('API QuotFi backend OK');

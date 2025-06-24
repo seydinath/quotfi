@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend
 } from "chart.js";
+import { API_URL } from "./api";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
@@ -38,7 +39,7 @@ export default function LiveAssetChart({ symbol, interval = 60, fallbackHistory 
       setUsedFallback(false);
       try {
         // Appel à l'API backend pour l'historique (à adapter selon votre backend)
-        const res = await fetch(`/api/markets/history/${encodeURIComponent(symbol)}?interval=${interval}`);
+        const res = await fetch(`${API_URL}/api/markets/history/${encodeURIComponent(symbol)}?interval=${interval}`);
         if (!res.ok) throw new Error("Erreur API Finnhub");
         const data = await res.json();
         if (isMounted) {

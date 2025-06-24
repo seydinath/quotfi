@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import { API_URL } from "./api";
 
 function Transactions({ transactions, onAddTransaction, onDeleteTransaction, token }) {
   // Liste d'actifs (matières premières en priorité)
@@ -44,7 +45,7 @@ function Transactions({ transactions, onAddTransaction, onDeleteTransaction, tok
   // Met à jour le solde d'un compte dans le backend
   const updateAccountBalance = async (accountId, newBalance) => {
     try {
-      await fetch(`http://localhost:5000/api/accounts/${accountId}`, {
+      await fetch(`${API_URL}/api/accounts/${accountId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +83,7 @@ function Transactions({ transactions, onAddTransaction, onDeleteTransaction, tok
     async function fetchAccounts() {
       setLoadingAccounts(true);
       try {
-        const res = await fetch("http://localhost:5000/api/accounts", {
+        const res = await fetch(`${API_URL}/api/accounts`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) throw new Error("Erreur API comptes");
@@ -101,7 +102,7 @@ function Transactions({ transactions, onAddTransaction, onDeleteTransaction, tok
     e.preventDefault();
     if (!newAccount.name.trim()) return;
     try {
-      const res = await fetch("http://localhost:5000/api/accounts", {
+      const res = await fetch(`${API_URL}/api/accounts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,7 +123,7 @@ function Transactions({ transactions, onAddTransaction, onDeleteTransaction, tok
   const handleDeleteAccount = async (accountId) => {
     if (!window.confirm('Supprimer ce compte ?')) return;
     try {
-      await fetch(`http://localhost:5000/api/accounts/${accountId}`, {
+      await fetch(`${API_URL}/api/accounts/${accountId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

@@ -1,4 +1,5 @@
 import React from "react";
+import { API_URL } from "./api";
 
 function PerformancesMatieresPremieres() {
   const [volatilityAssets, setVolatilityAssets] = React.useState([]);
@@ -6,7 +7,7 @@ function PerformancesMatieresPremieres() {
   const [errorVolatility, setErrorVolatility] = React.useState(null);
   React.useEffect(() => {
     setLoadingVolatility(true);
-    fetch('/api/markets/top-volatility')
+    fetch(`${API_URL}/api/markets/top-volatility`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur API');
         return res.json();

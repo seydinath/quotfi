@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { API_URL } from "./api";
 
 // symbols: tableau de symboles Finnhub (ex: ["OANDA:XAUUSD", "AAPL"])
 // fallbackData: tableau d'objets fallback (même ordre)
@@ -11,7 +12,7 @@ export default function useLiveFinnhubQuotes(symbols, fallbackData = []) {
   const fetchQuotes = () => {
     symbols.forEach((symbol, i) => {
       setLoading(l => ({ ...l, [symbol]: true }));
-      fetch(`/api/markets/quote/${encodeURIComponent(symbol)}`)
+      fetch(`${API_URL}/api/markets/quote/${encodeURIComponent(symbol)}`)
         .then(r => r.ok ? r.json() : Promise.reject(r))
         .then(json => {
           setQuotes(q => ({ ...q, [symbol]: json }));

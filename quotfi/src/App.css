@@ -559,83 +559,75 @@ body {
 }
 @media (max-width: 900px) {
   .sidebar {
-    width: 60px;
-    min-width: 60px;
-    padding: 0.7rem 0.2rem 0.7rem 0.2rem;
+    transform: translateX(-110%);
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1);
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 0; top: 0; bottom: 0;
+    z-index: 2002;
+    width: 220px;
+    min-width: 0;
+    max-width: 80vw;
     height: 100vh;
-    z-index: 100;
+    box-shadow: 2px 0 16px #0007;
+    background: #181b20;
+    padding-top: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
-  .dashboard-main {
-    margin-left: 60px;
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 2px 0 16px #0007;
   }
-  .sidebar .logo {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    padding-left: 0.1rem;
+  .sidebar:not(.open) {
+    pointer-events: none;
   }
-  .sidebar .nav-links button {
-    font-size: 0.98rem;
-    padding: 0.5rem 0.5rem;
+  .main-content.dashboard-main {
+    padding-left: 0 !important;
   }
-  .sidebar .sidebar-footer {
-    font-size: 0.85rem;
-    padding-top: 1rem;
+  .app-container.dashboard-layout.mobile-menu-open {
+    overflow: hidden;
+  }
+  .mobile-menu-overlay {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(24,28,37,0.65);
+    z-index: 2000;
+    animation: fadeIn 0.2s;
+  }
+  .close-mobile-menu {
+    display: block;
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    background: none;
+    border: none;
+    color: #ffd700;
+    font-size: 1.7rem;
+    cursor: pointer;
+    z-index: 2003;
+  }
+  /* Masquer la sidebar en row sur mobile (corrige le bug d'affichage en haut) */
+  .sidebar {
+    flex-direction: column !important;
+    width: 220px !important;
+    min-width: 0 !important;
+    max-width: 80vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    left: 0; top: 0; bottom: 0;
+    background: #181b20;
+    box-shadow: 2px 0 16px #0007;
+    padding-top: 2.2rem;
+    display: flex !important;
   }
 }
 @media (max-width: 700px) {
   .sidebar {
-    position: static;
-    width: 100vw;
-    min-width: 0;
-    height: auto;
-    min-height: 0;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0.5rem 0.2rem;
-    box-shadow: 0 2px 12px #0005;
-  }
-  .sidebar .logo {
-    font-size: 1rem;
-    margin-bottom: 0;
-    margin-right: 1rem;
-    padding-left: 0;
-  }
-  .sidebar .user-info-left {
-    margin-bottom: 0;
-    margin-right: 1rem;
-    font-size: 0.98rem;
-    padding-left: 0;
-  }
-  .sidebar .nav-links {
-    flex-direction: row;
-    gap: 0.7rem;
-    width: auto;
-    flex: none;
-    align-items: center;
-  }
-  .sidebar .nav-links button {
-    font-size: 0.95rem;
-    padding: 0.4rem 0.5rem;
-    width: auto;
-    text-align: center;
-    justify-content: center;
-  }
-  .sidebar .sidebar-footer {
-    position: static;
-    margin-top: 0;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    width: auto;
-    font-size: 0.85rem;
-    text-align: right;
-    margin-left: auto;
-    color: #b5e3e8;
-    background: none;
-    display: block;
+    width: 90vw !important;
+    max-width: 90vw !important;
   }
 }
 
@@ -1059,5 +1051,101 @@ body {
     font-size: 0.93rem;
     min-width: 520px;
     /* Permet le scroll horizontal sur mobile */
+  }
+}
+
+/* --- MENU HAMBURGER MOBILE --- */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 1.1rem;
+  left: 1.1rem;
+  z-index: 2001;
+  background: #23272f;
+  color: #ffd700;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.1rem;
+  font-size: 1.7rem;
+  box-shadow: 0 2px 12px #0005;
+  cursor: pointer;
+}
+.hamburger-icon {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+@media (max-width: 900px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  .sidebar {
+    transform: translateX(-110%);
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1);
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    z-index: 2002;
+    width: 220px;
+    min-width: 0;
+    max-width: 80vw;
+    height: 100vh;
+    box-shadow: 2px 0 16px #0007;
+    background: #181b20;
+    padding-top: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 2px 0 16px #0007;
+  }
+  .sidebar:not(.open) {
+    pointer-events: none;
+  }
+  .main-content.dashboard-main {
+    padding-left: 0 !important;
+  }
+  .app-container.dashboard-layout.mobile-menu-open {
+    overflow: hidden;
+  }
+  .mobile-menu-overlay {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(24,28,37,0.65);
+    z-index: 2000;
+    animation: fadeIn 0.2s;
+  }
+  .close-mobile-menu {
+    display: block;
+    position: absolute;
+    top: 1.1rem;
+    right: 1.1rem;
+    background: none;
+    border: none;
+    color: #ffd700;
+    font-size: 1.7rem;
+    cursor: pointer;
+    z-index: 2003;
+  }
+  /* Masquer la sidebar en row sur mobile (corrige le bug d'affichage en haut) */
+  .sidebar {
+    flex-direction: column !important;
+    width: 220px !important;
+    min-width: 0 !important;
+    max-width: 80vw !important;
+    height: 100vh !important;
+    position: fixed !important;
+    left: 0; top: 0; bottom: 0;
+    background: #181b20;
+    box-shadow: 2px 0 16px #0007;
+    padding-top: 2.2rem;
+    display: flex !important;
+  }
+}
+@media (min-width: 901px) {
+  .mobile-menu-btn, .mobile-menu-overlay, .close-mobile-menu {
+    display: none !important;
   }
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from "./api";
 
 function TopVolatility() {
   const [assets, setAssets] = useState([]);
@@ -6,7 +7,7 @@ function TopVolatility() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/markets/top-volatility')
+    fetch(`${API_URL}/api/markets/top-volatility`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur API');
         return res.json();

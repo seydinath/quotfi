@@ -1,5 +1,6 @@
 import React from "react";
 import useLiveFinnhubQuotes from "./useLiveFinnhubQuotes";
+import { API_URL } from "./api";
 
 // Mapping des actifs fictifs vers leur symbol Finnhub
 const assetSymbolMap = {
@@ -93,7 +94,7 @@ function Markets() {
     // Recharge à chaque refreshKey
     setChartLoading(true);
     setChartError(null);
-    fetch(`/api/markets/history/${encodeURIComponent(symbol)}?period=${period}`)
+    fetch(`${API_URL}/api/markets/history/${encodeURIComponent(symbol)}?period=${period}`)
       .then(r => {
         if (!r.ok) throw new Error("Erreur API historique");
         return r.json();

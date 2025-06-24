@@ -10,6 +10,7 @@ import useLiveFinnhubQuotes from "./useLiveFinnhubQuotes";
 import AssetChartSelector from "./AssetChartSelector";
 import TopVolatility from "./TopVolatility";
 import PerformancesMatieresPremieres from "./PerformancesMatieresPremieres";
+import { API_URL } from "./api";
 
 function Dashboard({ transactions, couvertures, calculerExpositionNette, hasActiveHedge, choisirMeilleureCouverture }) {
   // Calcul exposition nette
@@ -164,7 +165,7 @@ function Dashboard({ transactions, couvertures, calculerExpositionNette, hasActi
   const [errorVolatility, setErrorVolatility] = React.useState(null);
   React.useEffect(() => {
     setLoadingVolatility(true);
-    fetch('/api/markets/top-volatility')
+    fetch(`${API_URL}/api/markets/top-volatility`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur API');
         return res.json();
@@ -493,6 +494,7 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [user, setUser] = useState(null);
   const [couvertures, setCouvertures] = useState([]); // état global pour les couvertures
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // Ajout menu mobile
 
   // Réf pour le dashboard
   const dashboardRef = React.useRef(null);
@@ -563,9 +565,13 @@ function App() {
     return <AuthGate onAuth={handleAuth} />;
   }
 
+  // --- Ajout bouton hamburger et overlay menu mobile ---
   return (
-    <div className="app-container dashboard-layout">
-      <aside className="sidebar">
+    <div className={"app-container dashboard-layout" + (mobileMenuOpen ? " mobile-menu-open" : "") }>
+      <button className="mobile-menu-btn" aria-label="Ouvrir le menu" onClick={()=>setMobileMenuOpen(true)}>
+        <span className="hamburger-icon">☰</span>
+      </button>
+      <aside className={"sidebar" + (mobileMenuOpen ? " open" : "") }>
         <div className="logo">QuotFi</div>
         <div className="user-info-left">
           {user && user.firstName && user.lastName && (
@@ -573,15 +579,19 @@ function App() {
           )}
         </div>
         <ul className="nav-links">
-          <li><button className={page==="dashboard"?"active":undefined} onClick={()=>setPage("dashboard")}>Accueil</button></li>
-          <li><button className={page==="markets"?"active":undefined} onClick={()=>setPage("markets")}>Marchés</button></li>
-          <li><button className={page==="notifications"?"active":undefined} onClick={()=>setPage("notifications")}>Notifications</button></li>
-          <li><button className={page==="transactions"?"active":undefined} onClick={()=>setPage("transactions")}>Transactions</button></li>
-          <li><button className={page==="accounts"?"active":undefined} onClick={()=>setPage("accounts")}>Mon Compte</button></li>
-          <li><button className={page==="couverture"?"active":undefined} onClick={()=>setPage("couverture")}>Couverture</button></li>
-          <li><button className="logout-btn" onClick={()=>{setUser(null); localStorage.removeItem('quotfi_user_account');}}>Déconnexion</button></li>
+          <li><button className={page==="dashboard"?"active":undefined} onClick={()=>{setPage("dashboard");setMobileMenuOpen(false);}}>Accueil</button></li>
+          <li><button className={page==="markets"?"active":undefined} onClick={()=>{setPage("markets");setMobileMenuOpen(false);}}>Marchés</button></li>
+          <li><button className={page==="notifications"?"active":undefined} onClick={()=>{setPage("notifications");setMobileMenuOpen(false);}}>Notifications</button></li>
+          <li><button className={page==="transactions"?"active":undefined} onClick={()=>{setPage("transactions");setMobileMenuOpen(false);}}>Transactions</button></li>
+          <li><button className={page==="accounts"?"active":undefined} onClick={()=>{setPage("accounts");setMobileMenuOpen(false);}}>Mon Compte</button></li>
+          <li><button className={page==="couverture"?"active":undefined} onClick={()=>{setPage("couverture");setMobileMenuOpen(false);}}>Couverture</button></li>
+          <li><button className="logout-btn" onClick={()=>{setUser(null); localStorage.removeItem('quotfi_user_account'); setMobileMenuOpen(false);}}>Déconnexion</button></li>
         </ul>
+        {/* Bouton pour fermer le menu sur mobile */}
+        <button className="close-mobile-menu" aria-label="Fermer le menu" onClick={()=>setMobileMenuOpen(false)}>✕</button>
       </aside>
+      {/* Overlay pour fermer le menu en cliquant à côté */}
+      {mobileMenuOpen && <div className="mobile-menu-overlay" onClick={()=>setMobileMenuOpen(false)}></div>}
       <main className="main-content dashboard-main">
         {page==="dashboard" && (
           <>

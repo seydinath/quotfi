@@ -613,7 +613,14 @@ function App() {
           </>
         )}
         {page==="markets" && <Markets />}
-        {page==="transactions" && <Transactions transactions={transactions} onAddTransaction={handleAddTransaction} onDeleteTransaction={handleDeleteTransaction} />}
+        {page==="transactions" && (
+          <Transactions 
+            transactions={transactions} 
+            onAddTransaction={handleAddTransaction} 
+            onDeleteTransaction={handleDeleteTransaction} 
+            token={user?.token}
+          />
+        )}
         {page==="accounts" && <Accounts />}
         {page==="couverture" && <Couverture onAddCouverture={handleAddCouverture} couvertures={couvertures} />}
         {page==="notifications" && <Notifications />}

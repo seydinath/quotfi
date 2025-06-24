@@ -4,7 +4,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+
+// --- CORS configuration ---
+const allowedOrigins = [
+  'https://quotfivf.vercel.app',
+  'http://localhost:3000'
+];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(express.json());
 
 // --- Import routes ---

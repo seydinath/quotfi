@@ -587,6 +587,12 @@ function App() {
           <li><button className={page==="couverture"?"active":undefined} onClick={()=>{setPage("couverture");setMobileMenuOpen(false);}}>Couverture</button></li>
           <li><button className="logout-btn" onClick={()=>{setUser(null); localStorage.removeItem('quotfi_user_account'); setMobileMenuOpen(false);}}>Déconnexion</button></li>
         </ul>
+        {/* Display user name at the bottom of the sidebar */}
+        {user && user.firstName && user.lastName && (
+          <div className="sidebar-user-bottom" style={{marginTop:'auto',padding:'1.2rem 0',textAlign:'center',color:'#ffd700',fontWeight:700,fontSize:'1.08rem',letterSpacing:'0.5px'}}>
+            {user.firstName} {user.lastName}
+          </div>
+        )}
         {/* Bouton pour fermer le menu sur mobile */}
         <button className="close-mobile-menu" aria-label="Fermer le menu" onClick={()=>setMobileMenuOpen(false)}>✕</button>
       </aside>
